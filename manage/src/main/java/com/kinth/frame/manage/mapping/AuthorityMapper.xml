@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinth.frame.manage.mapper.AuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.kinth.frame.manage.domain.Authority" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="match_url" property="matchUrl" jdbcType="VARCHAR" />
+    <result column="item_icon" property="itemIcon" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="auth_object_type" property="authObjectType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, url, match_url, item_icon, parent_id, auth_object_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_authority
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_authority
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kinth.frame.manage.domain.Authority" >
+    insert into sys_authority (id, name, url, 
+      match_url, item_icon, parent_id, 
+      auth_object_type)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{matchUrl,jdbcType=VARCHAR}, #{itemIcon,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{authObjectType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kinth.frame.manage.domain.Authority" >
+    insert into sys_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="matchUrl != null" >
+        match_url,
+      </if>
+      <if test="itemIcon != null" >
+        item_icon,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="authObjectType != null" >
+        auth_object_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="matchUrl != null" >
+        #{matchUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemIcon != null" >
+        #{itemIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authObjectType != null" >
+        #{authObjectType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinth.frame.manage.domain.Authority" >
+    update sys_authority
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="matchUrl != null" >
+        match_url = #{matchUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemIcon != null" >
+        item_icon = #{itemIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authObjectType != null" >
+        auth_object_type = #{authObjectType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinth.frame.manage.domain.Authority" >
+    update sys_authority
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      match_url = #{matchUrl,jdbcType=VARCHAR},
+      item_icon = #{itemIcon,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      auth_object_type = #{authObjectType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
