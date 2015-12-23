@@ -68,4 +68,32 @@
       role_level = #{roleLevel,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+	</select>
+
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+		</where>
+		limit #{startIndex},#{pageSize}
+	</select>
+	<select id="selcount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(*) from sys_role
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+		</where>
+	</select>
 </mapper>

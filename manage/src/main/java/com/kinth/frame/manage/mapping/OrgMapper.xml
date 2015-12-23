@@ -68,4 +68,18 @@
       parent_id = #{parentId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectRootOrgs" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_org
+    where parent_id is null or parent_id=0
+  </select>
+  
+  <select id="selectChildOrgs" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_org
+   where parent_id = #{parentId,jdbcType=VARCHAR}
+  </select>
 </mapper>
