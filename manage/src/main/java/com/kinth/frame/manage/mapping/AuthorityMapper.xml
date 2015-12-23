@@ -114,4 +114,46 @@
       auth_object_type = #{authObjectType,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectRootAuthoritys" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_authority
+		where parent_id is null or parent_id=0
+	</select>
+	
+	<select id="selectChildAuthoritys" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_authority
+		where parent_id = #{parentId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_authority
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+		</where>
+		limit #{startIndex},#{pageSize}
+	</select>
+	<select id="selcount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(*) from sys_authority
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+		</where>
+	</select>
+	<select id="selRoleAuthorities" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select
+		<include refid="Base_Column_List"  />
+		from sys_authority,sys_role_authority where sys_authority.id=sys_role_authority.auth_id and sys_role_authority.role_id= #{roleId,jdbcType=VARCHAR}
+	</select>
 </mapper>
