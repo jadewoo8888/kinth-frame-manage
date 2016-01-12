@@ -23,4 +23,6 @@ public interface RoleMapper {
 	List<Role> selectByPage(Map<String, Object> paramMap);
 
 	int selcount(Map<String, Object> paramMap);
+	
+	List<Role> selectUserRole(String userId);
 }

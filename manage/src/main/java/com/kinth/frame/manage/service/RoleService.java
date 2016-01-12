@@ -60,4 +60,8 @@ public class RoleService {
 		roleMapper.updateByPrimaryKey(role);
 	}
 	
+	public List<Role> selectUserRole(String userId) {
+		return roleMapper.selectUserRole(userId);
+	}
+	
 }

@@ -8,4 +8,6 @@ public interface UserRoleMapper {
     int insert(UserRoleKey record);
 
     int insertSelective(UserRoleKey record);
+    
+    void deleteUserRoles(String userId);
 }

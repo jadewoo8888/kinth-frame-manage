@@ -17,6 +17,7 @@ import com.kinth.frame.common.helper.StringHelper;
 import com.kinth.frame.common.web.helper.PageList;
 import com.kinth.frame.common.web.helper.PageListUtil;
 import com.kinth.frame.manage.config.SysConfig;
+import com.kinth.frame.manage.domain.Role;
 import com.kinth.frame.manage.domain.User;
 import com.kinth.frame.manage.domain.UserRoleKey;
 import com.kinth.frame.manage.mapper.RoleMapper;
@@ -76,15 +77,19 @@ public class UserService {
 		return ret;
 	}
 	
-	public void updateBind(String id, String roleId, String orgId) throws ValidatException, EntityOperateException {
+	public void updateBind(String id, List<Role> roleList, String orgId) throws ValidatException, EntityOperateException {
 		User dbUser = userMapper.selectByPrimaryKey(id);
-		if(roleId != null && !roleId.equals("")) {
-			//dbUser.setRoleId(roleId);
-			UserRoleKey userRoleKey = new UserRoleKey();
-			userRoleKey.setRoleId(roleId);
-			userRoleKey.setUserId(id);
-			userRoleMapper.insert(userRoleKey);
+		
+		if (roleList != null && roleList.size() > 0) {
+			userRoleMapper.deleteUserRoles(id);
+			for (Role role : roleList) {
+				UserRoleKey userRoleKey = new UserRoleKey();
+				userRoleKey.setRoleId(role.getId());
+				userRoleKey.setUserId(id);
+				userRoleMapper.insert(userRoleKey);
+			}
 		}
+		
 		
 		if(orgId != null && !orgId.equals("")){
 			dbUser.setOrgId(orgId);
