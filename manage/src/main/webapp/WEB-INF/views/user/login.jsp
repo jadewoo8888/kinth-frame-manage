@@ -96,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- END LOGIN -->
 	<!-- BEGIN COPYRIGHT -->
 	<div class="copyright">
-		2013 &copy; Conquer. Admin Dashboard Template.
+		2016 &copy; 金税控股. 后台管理系统.
 	</div>
 	<!-- END COPYRIGHT -->
 	 
