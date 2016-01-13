@@ -47,7 +47,7 @@ public class AuthorityService {
 		dbModel.setItemIcon(model.getItemIcon());
 		dbModel.setParentId(model.getParentId());
 		dbModel.setAuthObjectType(model.getAuthObjectType());
-		authorityMapper.insert(dbModel);
+		authorityMapper.updateByPrimaryKey(dbModel);
 	}
 	
 	public PageList<Authority> listPage(AuthoritySearch search, int pageNo, int pageSize) {		

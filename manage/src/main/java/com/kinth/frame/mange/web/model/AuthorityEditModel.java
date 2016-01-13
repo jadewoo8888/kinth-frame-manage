@@ -1,17 +1,16 @@
 package com.kinth.frame.mange.web.model;
 
-import javax.validation.constraints.NotNull;
 
 public class AuthorityEditModel {
 
 	private String id;
 	private String name;
-	private int position;
-	private String theValue;
+	private int sort;
 	private String url;
 	private String matchUrl;
 	private String itemIcon;
 	private String parentId;
+	
 
 	public void setId(String id){
 		this.id=id;
@@ -19,12 +18,6 @@ public class AuthorityEditModel {
 	public void setName(String name){
 		this.name=name;
 	}	
-	public void setPosition(int position){
-		this.position=position;
-	}
-	public void setTheValue(String theValue){
-		this.theValue=theValue;
-	}
 	public void setUrl(String url){
 		this.url=url;
 	}
@@ -44,12 +37,6 @@ public class AuthorityEditModel {
 	public String getName(){
 		return this.name;
 	}
-	public int getPosition(){
-		return this.position;
-	}
-	public String getTheValue(){
-		return this.theValue;
-	}
 	public String getUrl(){
 		return this.url;
 	}
@@ -62,5 +49,12 @@ public class AuthorityEditModel {
 	public String getParentId(){
 		return this.parentId;
 	}
+	public int getSort() {
+		return sort;
+	}
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
+	
 	
 }

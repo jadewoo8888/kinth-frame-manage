@@ -56,6 +56,9 @@
       <if test="authObjectType != null" >
         auth_object_type,
       </if>
+      <if test="sort != null" >
+        sort
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -78,6 +81,9 @@
       </if>
       <if test="authObjectType != null" >
         #{authObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -102,6 +108,9 @@
       <if test="authObjectType != null" >
         auth_object_type = #{authObjectType,jdbcType=INTEGER},
       </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -112,7 +121,8 @@
       match_url = #{matchUrl,jdbcType=VARCHAR},
       item_icon = #{itemIcon,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=VARCHAR},
-      auth_object_type = #{authObjectType,jdbcType=INTEGER}
+      auth_object_type = #{authObjectType,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   

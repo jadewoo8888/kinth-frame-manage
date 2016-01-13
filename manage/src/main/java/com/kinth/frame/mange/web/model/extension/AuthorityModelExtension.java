@@ -45,7 +45,7 @@ public class AuthorityModelExtension {
 		ret.setUrl(model.getUrl());
 		ret.setMatchUrl(model.getMatchUrl());
 		ret.setItemIcon(model.getItemIcon());
-		
+		ret.setSort(model.getSort());
 		if(model.getParentId()!=null)
 			ret.setParentId(model.getParentId());
 		

@@ -88,14 +88,8 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">位置</label>
                               <div class="col-md-10">
-                                 <form:input path="position" class="form-control" placeholder="位置"/><br/>
-                                 <form:errors path="position" class="field-has-error"></form:errors>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">值</label>
-                              <div class="col-md-10">
-                                 <form:input path="theValue" class="form-control" placeholder="值"/>
+                                 <form:input path="sort" class="form-control" placeholder="位置"/><br/>
+                                 <form:errors path="sort" class="field-has-error"></form:errors>
                               </div>
                            </div>
                            <div class="form-group">

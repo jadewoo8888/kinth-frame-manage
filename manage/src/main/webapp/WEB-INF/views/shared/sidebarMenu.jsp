@@ -61,7 +61,7 @@
    </c:forEach>
    
    <li class="last">
-      <a href="<%=UrlHelper.resolveUrl("/account/logOut", pageContext)%>">
+      <a href="<c:url value='/user/logOut'/>">
       <i class="icon-off"></i> 
       <span class="title">注销登录</span>
       </a>
