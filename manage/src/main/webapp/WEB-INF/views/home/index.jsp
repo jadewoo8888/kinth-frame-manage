@@ -11,7 +11,7 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <title>Conquer | Admin Dashboard Template</title>
+   <title>后台管理首页</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -47,7 +47,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Dashboard <small>statistics and more</small>
+                  	金税控股 <small>后台管理系统</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
@@ -95,7 +95,7 @@
    <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2013 &copy; Conquer by keenthemes.
+         2016 &copy; Conquer by kinth.
       </div>
       <div class="footer-tools">
          <span class="go-top">
