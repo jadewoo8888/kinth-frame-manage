@@ -1,7 +1,6 @@
 package com.kinth.frame.mange.web.controller.interceptor;
 
 import java.net.URLEncoder;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +15,6 @@ import com.kinth.frame.mange.web.controller.auth.AuthHelper;
 import com.kinth.frame.mange.web.controller.auth.AuthPassport;
 import com.kinth.frame.mange.web.controller.auth.PermissionMenu;
 import com.kinth.frame.mange.web.controller.auth.UserAuth;
-import com.kinth.frame.mange.web.controller.auth.UserRole;
 
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
@@ -38,7 +36,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             		boolean hasPermission=false;
             		String requestServletPath=request.getServletPath();
             		
-            		for(PermissionMenu permissionMenu : userAuth.getPermissionMenus()){
+            		for(PermissionMenu permissionMenu : userAuth.getCurrRole().getPermissionMenus()){
             			
             			Pattern pattern = Pattern.compile(permissionMenu.getPermission(),Pattern.CASE_INSENSITIVE);
             			Matcher matcher = pattern.matcher(requestServletPath);

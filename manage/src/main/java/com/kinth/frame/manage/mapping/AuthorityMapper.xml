@@ -9,9 +9,10 @@
     <result column="item_icon" property="itemIcon" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="auth_object_type" property="authObjectType" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, url, match_url, item_icon, parent_id, auth_object_type
+    id, name, url, match_url, item_icon, parent_id, auth_object_type, sort
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -154,6 +155,6 @@
 	<select id="selRoleAuthorities" resultMap="BaseResultMap" parameterType="java.lang.String">
 	select
 		<include refid="Base_Column_List"  />
-		from sys_authority,sys_role_authority where sys_authority.id=sys_role_authority.auth_id and sys_role_authority.role_id= #{roleId,jdbcType=VARCHAR}
+		from sys_authority,sys_role_authority where sys_authority.id=sys_role_authority.auth_id and sys_role_authority.role_id= #{roleId,jdbcType=VARCHAR} order by sys_authority.sort 
 	</select>
 </mapper>

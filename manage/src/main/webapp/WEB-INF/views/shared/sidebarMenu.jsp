@@ -10,7 +10,7 @@
       <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
    </li>
    
-   <c:forEach items="${sessionScope.userAuth.authorityMenus}" var="item" varStatus="status">
+   <c:forEach items="${sessionScope.userAuth.currRole.authorityMenus}" var="item" varStatus="status">
    		<c:choose>  
         <c:when test="${status.first}">
             <c:choose>  

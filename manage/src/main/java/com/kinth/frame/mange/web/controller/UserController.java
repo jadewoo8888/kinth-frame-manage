@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -74,11 +75,15 @@ public class UserController extends BaseController {
         return "user/login";
     }
 	
+	
 	@RequestMapping(value="/login", method = {RequestMethod.POST})
 	public String login(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserLoginModel userLoginModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 		//如果有验证错误 返回到form页面
-        if(result.hasErrors())
-            return login(model);
+        if(result.hasErrors()) {
+        	return login(model);
+        }
+            
+        List<Role> roleList = null;
         User user = userService.login(userLoginModel.getLoginName().trim(), userLoginModel.getPassword().trim());
         if(user == null || user.getEnable() == false){
         	if(user==null){
@@ -90,69 +95,71 @@ public class UserController extends BaseController {
         	}
             return login(model);
         } else {
-        	List<Role> roleList = roleService.selectUserRole(user.getId());
+        	roleList = roleService.selectUserRole(user.getId());
         	if (roleList == null || roleList.size() == 0) {
         		result.addError(new FieldError("contentModel","username","此用户当前未被授权，不能登录。"));
         		 return login(model);
         	}
-        	UserAuth userAuth = new UserAuth(user.getId(), user.getLoginName(), user.getRealName());
-        	
-        	Set<AuthorityMenu> authorityMenus = new HashSet<AuthorityMenu>();
-        	Set<PermissionMenu> permissionMenus = new HashSet<PermissionMenu>(); 
-        	
-        	//List<UserRole> userRoles = new ArrayList<UserRole>();
-        	
-        	for (Role role : roleList) {
-        		//UserRole userRole = new UserRole(role.getId(), role.getName());
-            	
-            	List<Authority> roleAuthorities = authorityService.getAuthoritys(role.getId());
-            	
-            	for(Authority authority :roleAuthorities){
-            		if(authority.getParentId()==null){
-            			AuthorityMenu authorityMenu=new AuthorityMenu(authority.getId(), authority.getName(), authority.getItemIcon(), authority.getUrl());
-            			
-            			Set<AuthorityMenu> childrenAuthorityMenus=new HashSet<AuthorityMenu>();
-            			for(Authority subAuthority :roleAuthorities){   				
-            				if(subAuthority.getParentId()!=null && subAuthority.getParentId().equals(authority.getId()))
-            					childrenAuthorityMenus.add(new AuthorityMenu(subAuthority.getId(), subAuthority.getName(), subAuthority.getItemIcon(), subAuthority.getUrl()));
-            			}
-            			authorityMenu.setChildrens(childrenAuthorityMenus);
-            			authorityMenus.add(authorityMenu);
-            		}
-            	}
-            	
-            	for(Authority authority : roleAuthorities){ 	  		
-            		List<Authority> parentAuthorities = new ArrayList<Authority>();
-            		Authority tempAuthority=authority;
-            		Authority parentAuthority = null;
-            		while(tempAuthority.getParentId()!=null && !tempAuthority.getParentId().equals("")){
-            			parentAuthority = authorityService.getById(tempAuthority.getParentId());
-            			parentAuthorities.add(parentAuthority);
-            			tempAuthority=parentAuthority;
-            		}
-            		if(parentAuthorities.size()>=2)
-            			permissionMenus.add(new PermissionMenu(parentAuthorities.get(parentAuthorities.size()-1).getId(),parentAuthorities.get(parentAuthorities.size()-1).getName(),parentAuthorities.get(parentAuthorities.size()-2).getId(),parentAuthorities.get(parentAuthorities.size()-2).getName(),authority.getName(),authority.getMatchUrl()));
-            		else if(parentAuthorities.size()==1)
-            			permissionMenus.add(new PermissionMenu(parentAuthorities.get(0).getId(),parentAuthorities.get(0).getName(),authority.getId(),authority.getName(),authority.getName(),authority.getMatchUrl()));
-            		else
-            			permissionMenus.add(new PermissionMenu(authority.getId(),authority.getName(),null,null,authority.getName(),authority.getMatchUrl()));
-            	}
-            	//userRole.setAuthorityMenus(authorityMenus);
-            	//userRole.setPermissionMenus(permissionMenus);
-            	//userRoles.add(userRole);
+        	if (roleList.size() == 1) {//如果是单角色
+        		return selRoleLogin(request, model, roleList.get(0).getId(), user.getId(), user.getLoginName(), user.getRealName());
         	}
-        	
-        	//userAuth.setUserRoles(userRoles);
-        	userAuth.setRoles(roleList);
-        	userAuth.setAuthorityMenus(authorityMenus);
-        	userAuth.setPermissionMenus(permissionMenus);
-        	AuthHelper.setSessionUserAuth(request, userAuth);
         }
         
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="/home/index";
-    	return "redirect:"+returnUrl; 	
+        UserAuth userAuth = new UserAuth(user.getId(), user.getLoginName(), user.getRealName());
+        userAuth.setRoles(roleList);
+        model.addAttribute("userAuth", userAuth);
+        
+        return "user/selRole";
+	}
+	
+	@RequestMapping(value="/selRoleLogin/{roleId}/{userId}/{loginName}/{realName}/", method = {RequestMethod.GET})
+	public String selRoleLogin(HttpServletRequest request, Model model, @PathVariable String roleId,@PathVariable String userId,@PathVariable String loginName,@PathVariable String realName) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
+			UserAuth userAuth=new UserAuth(userId, loginName, realName);
+	    	Role role = roleService.getById(roleId);
+	    	UserRole userRole=new UserRole(role.getId(), role.getName());
+	    	List<AuthorityMenu> authorityMenus=new ArrayList<AuthorityMenu>();
+	    	List<Authority> roleAuthorities = authorityService.getAuthoritys(roleId);
+	    	
+	    	for(Authority authority :roleAuthorities){
+	    		if(authority.getParentId()==null){
+	    			AuthorityMenu authorityMenu=new AuthorityMenu(authority.getId(), authority.getName(), authority.getItemIcon(), authority.getUrl());
+	    			
+	    			List<AuthorityMenu> childrenAuthorityMenus=new ArrayList<AuthorityMenu>();
+	    			for(Authority subAuthority :roleAuthorities){   				
+	    				if(subAuthority.getParentId()!=null && subAuthority.getParentId().equals(authority.getId()))
+	    					childrenAuthorityMenus.add(new AuthorityMenu(subAuthority.getId(), subAuthority.getName(), subAuthority.getItemIcon(), subAuthority.getUrl()));
+	    			}
+	    			authorityMenu.setChildrens(childrenAuthorityMenus);
+	    			authorityMenus.add(authorityMenu);
+	    		}
+	    	}
+	    	
+			List<PermissionMenu> permissionMenus=new ArrayList<PermissionMenu>(); 	
+	    	for(Authority authority : roleAuthorities){ 	  		
+	    		List<Authority> parentAuthorities=new ArrayList<Authority>();
+	    		Authority tempAuthority=authority;
+	    		Authority parentAuthority = null;
+	    		while(tempAuthority.getParentId()!=null && !tempAuthority.getParentId().equals("")){
+	    			parentAuthority = authorityService.getById(tempAuthority.getParentId());
+	    			parentAuthorities.add(parentAuthority);
+	    			tempAuthority=parentAuthority;
+	    		}
+	    		if(parentAuthorities.size()>=2)
+	    			permissionMenus.add(new PermissionMenu(parentAuthorities.get(parentAuthorities.size()-1).getId(),parentAuthorities.get(parentAuthorities.size()-1).getName(),parentAuthorities.get(parentAuthorities.size()-2).getId(),parentAuthorities.get(parentAuthorities.size()-2).getName(),authority.getName(),authority.getMatchUrl()));
+	    		else if(parentAuthorities.size()==1)
+	    			permissionMenus.add(new PermissionMenu(parentAuthorities.get(0).getId(),parentAuthorities.get(0).getName(),authority.getId(),authority.getName(),authority.getName(),authority.getMatchUrl()));
+	    		else
+	    			permissionMenus.add(new PermissionMenu(authority.getId(),authority.getName(),null,null,authority.getName(),authority.getMatchUrl()));
+	    	}
+	    	userRole.setAuthorityMenus(authorityMenus);
+	    	userRole.setPermissionMenus(permissionMenus);
+	    	userAuth.setCurrRole(userRole);
+	    	AuthHelper.setSessionUserAuth(request, userAuth);
+	    
+		    String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		    if(returnUrl==null)
+		    	returnUrl="/home/index";
+			return "redirect:"+returnUrl; 	
 	}
 	
 	@RequestMapping(value="/logOut", method = {RequestMethod.GET})
@@ -160,33 +167,6 @@ public class UserController extends BaseController {
 		AuthHelper.removeSessionUserAuth(request);
 		return "redirect:/home/index";
     }
-	
-/*	@RequestMapping(value="/register", method = {RequestMethod.GET})
-    public String register(Model model){
-		if(!model.containsAttribute("contentModel"))
-            model.addAttribute("contentModel", new UserRegisterModel());
-        return "user/register";
-    }
-	
-	@RequestMapping(value="/register", method = {RequestMethod.POST})
-	public String register(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserRegisterModel UserRegisterModel, BindingResult result) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
-		if(!UserRegisterModel.getPassword().equals(UserRegisterModel.getConfirmPassword())) {
-			result.addError(new FieldError("contentModel","confirmPassword","确认密码与密码输入不一致。"));
-		}
-		//如果有验证错误 返回到form页面
-        if(result.hasErrors()) {
-        	return register(model);
-        } else if(UserService.UserExist(UserRegisterModel.getUsername())){
-        	result.addError(new FieldError("contentModel","username","该用户名已被注册。"));
-            return register(model);
-        }      
-        UserService.saveRegister(UserRegisterModelExtension.toUser(UserRegisterModel));
-        
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="user/login";
-    	return "redirect:"+returnUrl; 	
-	}*/
 	
 	@AuthPassport
 	@RequestMapping(value="/list", method = {RequestMethod.GET})

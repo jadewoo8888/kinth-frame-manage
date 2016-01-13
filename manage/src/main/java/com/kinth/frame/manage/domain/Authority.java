@@ -14,6 +14,8 @@ public class Authority {
     private String parentId;
 
     private Integer authObjectType;
+    
+    private Integer sort;
 
     public String getId() {
         return id;
@@ -70,4 +72,14 @@ public class Authority {
     public void setAuthObjectType(Integer authObjectType) {
         this.authObjectType = authObjectType;
     }
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+    
+    
 }

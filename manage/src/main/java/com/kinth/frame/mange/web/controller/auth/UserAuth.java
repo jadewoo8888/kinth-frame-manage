@@ -1,6 +1,5 @@
 package com.kinth.frame.mange.web.controller.auth;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +14,7 @@ public class UserAuth {
 	private Set<AuthorityMenu> authorityMenus;
 	private Set<PermissionMenu> permissionMenus;
 	private List<Role> roles;
+	private UserRole currRole;
 	
 	public UserAuth(String id, String loginName, String realName){
 		this.id=id;
@@ -68,6 +68,14 @@ public class UserAuth {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public UserRole getCurrRole() {
+		return currRole;
+	}
+
+	public void setCurrRole(UserRole currRole) {
+		this.currRole = currRole;
 	}
 
 	/*public List<UserRole> getUserRoles() {

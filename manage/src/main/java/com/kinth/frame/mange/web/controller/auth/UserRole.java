@@ -1,13 +1,13 @@
 package com.kinth.frame.mange.web.controller.auth;
 
-import java.util.Collection;
+import java.util.List;
 
 public class UserRole {
 	
 	private String id;
 	private String name;
-	//private Collection<AuthorityMenu> authorityMenus;
-	//private Collection<PermissionMenu> permissionMenus;
+	private List<AuthorityMenu> authorityMenus;
+	private List<PermissionMenu> permissionMenus;
 	
 	public UserRole(String id, String name){
 		this.id=id;
@@ -20,12 +20,12 @@ public class UserRole {
 	public void setName(String name){
 		this.name=name;
 	}
-	/*public void setPermissionMenus(Collection<PermissionMenu> permissionMenus){
+	public void setPermissionMenus(List<PermissionMenu> permissionMenus){
 		this.permissionMenus=permissionMenus;
 	}
-	public void setAuthorityMenus(Collection<AuthorityMenu> authorityMenus){
+	public void setAuthorityMenus(List<AuthorityMenu> authorityMenus){
 		this.authorityMenus=authorityMenus;
-	}*/
+	}
 	
 	public String getId(){
 		return this.id;
@@ -33,11 +33,11 @@ public class UserRole {
 	public String getName(){
 		return this.name;
 	}
-	/*public Collection<PermissionMenu> getPermissionMenus(){
+	public List<PermissionMenu> getPermissionMenus(){
 		return this.permissionMenus;
 	}
-	public Collection<AuthorityMenu> getAuthorityMenus(){
+	public List<AuthorityMenu> getAuthorityMenus(){
 		return this.authorityMenus;
-	}*/
+	}
 	
 }
