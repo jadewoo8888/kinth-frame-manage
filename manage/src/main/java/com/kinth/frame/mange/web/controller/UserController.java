@@ -3,7 +3,9 @@ package com.kinth.frame.mange.web.controller;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -95,20 +97,21 @@ public class UserController extends BaseController {
         	}
         	UserAuth userAuth = new UserAuth(user.getId(), user.getLoginName(), user.getRealName());
         	
-        	List<UserRole> userRoles = new ArrayList<UserRole>();
+        	Set<AuthorityMenu> authorityMenus = new HashSet<AuthorityMenu>();
+        	Set<PermissionMenu> permissionMenus = new HashSet<PermissionMenu>(); 
+        	
+        	//List<UserRole> userRoles = new ArrayList<UserRole>();
+        	
         	for (Role role : roleList) {
-        		UserRole userRole = new UserRole(role.getId(), role.getName());
+        		//UserRole userRole = new UserRole(role.getId(), role.getName());
             	
-            	
-            	List<AuthorityMenu> authorityMenus = new ArrayList<AuthorityMenu>();
             	List<Authority> roleAuthorities = authorityService.getAuthoritys(role.getId());
-            	
             	
             	for(Authority authority :roleAuthorities){
             		if(authority.getParentId()==null){
             			AuthorityMenu authorityMenu=new AuthorityMenu(authority.getId(), authority.getName(), authority.getItemIcon(), authority.getUrl());
             			
-            			List<AuthorityMenu> childrenAuthorityMenus=new ArrayList<AuthorityMenu>();
+            			Set<AuthorityMenu> childrenAuthorityMenus=new HashSet<AuthorityMenu>();
             			for(Authority subAuthority :roleAuthorities){   				
             				if(subAuthority.getParentId()!=null && subAuthority.getParentId().equals(authority.getId()))
             					childrenAuthorityMenus.add(new AuthorityMenu(subAuthority.getId(), subAuthority.getName(), subAuthority.getItemIcon(), subAuthority.getUrl()));
@@ -118,9 +121,8 @@ public class UserController extends BaseController {
             		}
             	}
             	
-        		List<PermissionMenu> permissionMenus=new ArrayList<PermissionMenu>(); 	
             	for(Authority authority : roleAuthorities){ 	  		
-            		List<Authority> parentAuthorities=new ArrayList<Authority>();
+            		List<Authority> parentAuthorities = new ArrayList<Authority>();
             		Authority tempAuthority=authority;
             		Authority parentAuthority = null;
             		while(tempAuthority.getParentId()!=null && !tempAuthority.getParentId().equals("")){
@@ -135,12 +137,15 @@ public class UserController extends BaseController {
             		else
             			permissionMenus.add(new PermissionMenu(authority.getId(),authority.getName(),null,null,authority.getName(),authority.getMatchUrl()));
             	}
-            	userRole.setAuthorityMenus(authorityMenus);
-            	userRole.setPermissionMenus(permissionMenus);
-            	userRoles.add(userRole);
+            	//userRole.setAuthorityMenus(authorityMenus);
+            	//userRole.setPermissionMenus(permissionMenus);
+            	//userRoles.add(userRole);
         	}
         	
-        	userAuth.setUserRoles(userRoles);
+        	//userAuth.setUserRoles(userRoles);
+        	userAuth.setRoles(roleList);
+        	userAuth.setAuthorityMenus(authorityMenus);
+        	userAuth.setPermissionMenus(permissionMenus);
         	AuthHelper.setSessionUserAuth(request, userAuth);
         }
         

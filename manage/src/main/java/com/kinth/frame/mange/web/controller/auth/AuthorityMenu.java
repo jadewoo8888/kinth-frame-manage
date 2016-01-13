@@ -1,6 +1,6 @@
 package com.kinth.frame.mange.web.controller.auth;
 
-import java.util.List;
+import java.util.Collection;
 
 public class AuthorityMenu {
 	
@@ -8,7 +8,7 @@ public class AuthorityMenu {
 	private String name;
 	private String itemIcon;
 	private String url;
-	private List<AuthorityMenu> childrens;
+	private Collection<AuthorityMenu> childrens;
 	
 	public AuthorityMenu(String id, String name, String itemIcon, String url){
 		this.id=id;
@@ -17,7 +17,7 @@ public class AuthorityMenu {
 		this.url=url;
 	}
 	
-	public AuthorityMenu(String id, String name,  String itemIcon, String url, List<AuthorityMenu> childrens){
+	public AuthorityMenu(String id, String name,  String itemIcon, String url, Collection<AuthorityMenu> childrens){
 		this.id=id;
 		this.name=name;
 		this.itemIcon=itemIcon;
@@ -37,7 +37,7 @@ public class AuthorityMenu {
 	public void setUrl(String url){
 		this.url=url;
 	}
-	public void setChildrens(List<AuthorityMenu> childrens){
+	public void setChildrens(Collection<AuthorityMenu> childrens){
 		this.childrens=childrens;
 	}
 	
@@ -53,7 +53,7 @@ public class AuthorityMenu {
 	public String getUrl(){
 		return this.url;
 	}
-	public List<AuthorityMenu> getChildrens(){
+	public Collection<AuthorityMenu> getChildrens(){
 		return this.childrens;
 	}
 	

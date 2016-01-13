@@ -32,36 +32,25 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 return true;
             else{
             	
-            	UserAuth userAuth = AuthHelper.getSessionUserAuth(request);
-            	if(userAuth != null)
+            	UserAuth userAuth=AuthHelper.getSessionUserAuth(request);
+            	if(userAuth!=null)
             	{
             		boolean hasPermission=false;
-            		String requestServletPath = request.getServletPath();
+            		String requestServletPath=request.getServletPath();
             		
-            		List<UserRole> userRoles = userAuth.getUserRoles();
-            		for (UserRole userRole : userRoles) {
-            			for(PermissionMenu permissionMenu : userRole.getPermissionMenus()){
-                			
-                			Pattern pattern = Pattern.compile(permissionMenu.getPermission(),Pattern.CASE_INSENSITIVE);
-                			Matcher matcher = pattern.matcher(requestServletPath);
-                			System.out.println("permissionMenu.getPermission():"+permissionMenu.getPermission());
-                			System.out.println("requestServletPath:"+requestServletPath);
-                			if(matcher.find()){
-                				hasPermission=true;
-                				AuthHelper.setRequestPermissionMenu(request, permissionMenu);
-                			}
-                		}
+            		for(PermissionMenu permissionMenu : userAuth.getPermissionMenus()){
+            			
+            			Pattern pattern = Pattern.compile(permissionMenu.getPermission(),Pattern.CASE_INSENSITIVE);
+            			Matcher matcher = pattern.matcher(requestServletPath);
+            			if(matcher.find()){
+            				hasPermission=true;
+            				AuthHelper.setRequestPermissionMenu(request, permissionMenu);
+            			}
             		}
-            		
-            		
-            		if(hasPermission) {
+            		if(hasPermission)
             			return true;
-            		}
-            			
-            		else {
+            		else
             			throw new PermissionException("没有权限！");
-            		}
-            			
             	}
             	else
             	{

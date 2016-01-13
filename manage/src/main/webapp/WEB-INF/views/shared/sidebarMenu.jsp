@@ -10,61 +10,58 @@
       <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
    </li>
    
-   <c:forEach items="${sessionScope.userAuth.userRoles}" var="urItem" varStatus="status">
-   		<c:forEach items="${urItem.authorityMenus}" var="item" varStatus="subStatus">
-   			<c:choose>  
-		        <c:when test="${status.first}">
-		            <c:choose>  
-				        <c:when test="${item.id eq requestScope.permissionMenu.rootId}">  
-				            <li class="start active">
-				        </c:when>  
-				        <c:otherwise>  
-				            <li class="start">
-				        </c:otherwise>  
-				    </c:choose>
+   <c:forEach items="${sessionScope.userAuth.authorityMenus}" var="item" varStatus="status">
+   		<c:choose>  
+        <c:when test="${status.first}">
+            <c:choose>  
+		        <c:when test="${item.id eq requestScope.permissionMenu.rootId}">  
+		            <li class="start active">
 		        </c:when>  
 		        <c:otherwise>  
-		            <c:choose>  
-				        <c:when test="${item.id eq requestScope.permissionMenu.rootId}">  
-				            <li class="active">
-				        </c:when>  
-				        <c:otherwise>  
-				            <li class="">
-				        </c:otherwise>  
-				    </c:choose>
+		            <li class="start">
 		        </c:otherwise>  
-		    	</c:choose>
-		   		<a href="javascript:;">
-					<i class='${ empty item.itemIcon?"icon-list": item.itemIcon}'></i>
-					<span class="title">${ item.name }</span>
-					<span class="arrow "></span>
-				</a>
-				<c:forEach items="${item.childrens}" var="subItem" varStatus="subStatus">
-					<c:if test="${subStatus.first}">
-					<ul class="sub-menu">
-					</c:if>
-					
-					<c:choose>  
-				        <c:when test="${subItem.id eq requestScope.permissionMenu.subId}">  
-				            <li class="active">
-				        </c:when>  
-				        <c:otherwise>  
-				            <li>
-				        </c:otherwise>  
-				    </c:choose>
-			            	<a href="<c:url value='${ subItem.url }'/>">${ subItem.name }</a>
-		         		</li>
-					<c:if test="${subStatus.last}">
-					</ul>
-					</c:if>
-				</c:forEach>
-		   	</li>
-   		</c:forEach>
+		    </c:choose>
+        </c:when>  
+        <c:otherwise>  
+            <c:choose>  
+		        <c:when test="${item.id eq requestScope.permissionMenu.rootId}">  
+		            <li class="active">
+		        </c:when>  
+		        <c:otherwise>  
+		            <li class="">
+		        </c:otherwise>  
+		    </c:choose>
+        </c:otherwise>  
+    	</c:choose>
+   		<a href="javascript:;">
+			<i class='${ empty item.itemIcon?"icon-list": item.itemIcon}'></i>
+			<span class="title">${ item.name }</span>
+			<span class="arrow "></span>
+		</a>
+		<c:forEach items="${item.childrens}" var="subItem" varStatus="subStatus">
+			<c:if test="${subStatus.first}">
+			<ul class="sub-menu">
+			</c:if>
+			
+			<c:choose>  
+		        <c:when test="${subItem.id eq requestScope.permissionMenu.subId}">  
+		            <li class="active">
+		        </c:when>  
+		        <c:otherwise>  
+		            <li>
+		        </c:otherwise>  
+		    </c:choose>
+	            	<a href="<c:url value='${ subItem.url }'/>">${ subItem.name }</a>
+         		</li>
+			<c:if test="${subStatus.last}">
+			</ul>
+			</c:if>
+		</c:forEach>
+   			</li>
    </c:forEach>
    
-   
    <li class="last">
-      <a href="<%=UrlHelper.resolveUrl("/user/logOut", pageContext)%>">
+      <a href="<%=UrlHelper.resolveUrl("/account/logOut", pageContext)%>">
       <i class="icon-off"></i> 
       <span class="title">注销登录</span>
       </a>
