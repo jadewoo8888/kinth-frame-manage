@@ -1,5 +1,6 @@
 package com.kinth.frame.manage.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.kinth.frame.common.exception.EntityOperateException;
 import com.kinth.frame.common.web.helper.PageList;
 import com.kinth.frame.common.web.helper.PageListUtil;
+import com.kinth.frame.common.web.helper.TreeModel;
+import com.kinth.frame.manage.domain.Org;
 import com.kinth.frame.manage.domain.Role;
 import com.kinth.frame.manage.mapper.RoleMapper;
 import com.kinth.frame.manage.service.model.RoleSearch;
@@ -64,4 +67,33 @@ public class RoleService {
 		return roleMapper.selectUserRole(userId);
 	}
 	
+	public List<Role> getAllRole() {
+		return roleMapper.selectAll();
+	}
+	
+	public List<TreeModel> ToTreeModels(List<Role> allRole,String selectedId, List<String> checkedIdList,List<String> expandedIdList) {
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		
+		for (Role role : allRole) {
+			boolean checked = false;
+			boolean selected = false;
+			boolean collpase = true;
+			List<TreeModel> children = null;
+			
+			if (selectedId != null && selectedId.equals(role.getId())) {
+				selected = true;
+			}
+			if (checkedIdList != null && !checkedIdList.isEmpty()) {
+				checked = checkedIdList.contains(role.getId());
+			}
+			if (expandedIdList != null && !expandedIdList.isEmpty()) {
+				collpase = !expandedIdList.contains(role.getId());
+			}
+
+			treeModels.add(new TreeModel(role.getId(), role.getId(), role.getName(), checked,
+					selected, collpase, children));
+		}
+		return treeModels;
+		
+	}
 }

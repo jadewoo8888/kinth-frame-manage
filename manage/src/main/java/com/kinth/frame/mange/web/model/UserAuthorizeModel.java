@@ -9,7 +9,7 @@ public class UserAuthorizeModel {
 	private String id;
 	private String loginName;
 	private String realName;
-	private List<Role> roleList;
+	private String[] roleIds;
 	private String orgId;
 	
 	public String getLoginName() {
@@ -24,12 +24,15 @@ public class UserAuthorizeModel {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	public List<Role> getRoleList() {
-		return roleList;
+	
+	
+	public String[] getRoleIds() {
+		return roleIds;
 	}
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
 	}
+	
 	public String getOrgId() {
 		return orgId;
 	}

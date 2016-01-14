@@ -77,14 +77,14 @@ public class UserService {
 		return ret;
 	}
 	
-	public void updateBind(String id, List<Role> roleList, String orgId) throws ValidatException, EntityOperateException {
+	public void updateBind(String id, String[] roleIds, String orgId) throws ValidatException, EntityOperateException {
 		User dbUser = userMapper.selectByPrimaryKey(id);
 		
-		if (roleList != null && roleList.size() > 0) {
+		if (roleIds != null && roleIds.length > 0) {
 			userRoleMapper.deleteUserRoles(id);
-			for (Role role : roleList) {
+			for (String roleId : roleIds) {
 				UserRoleKey userRoleKey = new UserRoleKey();
-				userRoleKey.setRoleId(role.getId());
+				userRoleKey.setRoleId(roleId);
 				userRoleKey.setUserId(id);
 				userRoleMapper.insert(userRoleKey);
 			}

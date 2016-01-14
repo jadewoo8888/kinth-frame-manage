@@ -42,11 +42,13 @@ import com.kinth.frame.mange.web.controller.auth.AuthorityMenu;
 import com.kinth.frame.mange.web.controller.auth.PermissionMenu;
 import com.kinth.frame.mange.web.controller.auth.UserAuth;
 import com.kinth.frame.mange.web.controller.auth.UserRole;
+import com.kinth.frame.mange.web.model.RoleBindModel;
 import com.kinth.frame.mange.web.model.UserAuthorizeModel;
 import com.kinth.frame.mange.web.model.UserEditModel;
 import com.kinth.frame.mange.web.model.UserLoginModel;
 import com.kinth.frame.mange.web.model.UserPasswordEditModel;
 import com.kinth.frame.mange.web.model.UserSearchModel;
+import com.kinth.frame.mange.web.model.extension.RoleBindModelExtension;
 import com.kinth.frame.mange.web.model.extension.UserAuthorizeModelExtension;
 import com.kinth.frame.mange.web.model.extension.UserModelExtension;
 
@@ -183,8 +185,74 @@ public class UserController extends BaseController {
     }
 	
 	@AuthPassport
+	@RequestMapping(value="/role/{id}", method = {RequestMethod.GET})
+    public String role(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
+		/*if(!model.containsAttribute("contentModel")){
+			
+			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
+			User user = userService.getById(id);
+			UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
+			List<Role> roleList = roleService.selectUserRole(id);
+			UserBindModel.setRoleList(roleList);
+            model.addAttribute("contentModel", UserBindModel);
+        }	
+
+		List<TreeModel> treeModels;
+		UserAuthorizeModel authorizeModel=(UserAuthorizeModel)model.asMap().get("contentModel");
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
+		if(authorizeModel.getOrgId()!=null && !authorizeModel.getOrgId().equals("")){
+			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), authorizeModel.getOrgId(), null, StringHelper.toStringList( expanded, ","));
+			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,false,false,children)));
+		}
+		else{
+			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), null, null, StringHelper.toStringList( expanded, ","));
+			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,true,false,children)));
+		}
+		model.addAttribute(treeDataSourceName, JSON.toJSONString(treeModels));
+		model.addAttribute(selectDataSourceName, roleService.getAllRoleMap());*/
+		
+		
+		User user = userService.getById(id);
+		List<String> checkedRoleIds = new ArrayList<String>();
+		
+		List<Role> roles = roleService.selectUserRole(id);
+		for(Role item : roles){
+			checkedRoleIds.add(item.getId());
+		}	
+		
+		if(!model.containsAttribute("contentModel")){
+			UserAuthorizeModel userBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
+			String[] checkedRoleIdsArray = new String[checkedRoleIds.size()];
+			checkedRoleIds.toArray(checkedRoleIdsArray);
+			userBindModel.setRoleIds(checkedRoleIdsArray);
+			model.addAttribute("contentModel", userBindModel);
+		}
+		
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
+		//List<TreeModel> children=TreeModelExtension.ToTreeModels(chainEntityService,chainEntityService.listChain(Authority.class), null, checkedAuthorityIds, StringHelper.toStringList( expanded, ","),Authority.class);		
+		List<TreeModel> treeModels = roleService.ToTreeModels(roleService.getAllRole(), null, checkedRoleIds, StringHelper.toStringList( expanded, ","));
+		//List<TreeModel> treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null,null,"根节点",false,false,false,children)));
+		model.addAttribute(treeDataSourceName, JSON.toJSONString(treeModels));
+		
+        return "user/role";
+    }
+	
+	@AuthPassport
+	@RequestMapping(value="/role/{id}", method = {RequestMethod.POST})
+	public String role(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
+		if(result.hasErrors())
+            return role(request, model, id);
+
+		userService.updateBind(id, userAuthorizeModel.getRoleIds(), null);       
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        if(returnUrl==null)
+        	returnUrl="user/list";
+    	return "redirect:"+returnUrl; 	
+	}
+	
+	@AuthPassport
 	@RequestMapping(value="/org/{id}", method = {RequestMethod.GET})
-    public String setUserOrg(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
+    public String org(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
 		if(!model.containsAttribute("contentModel")){
 			
 			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
@@ -214,9 +282,9 @@ public class UserController extends BaseController {
 	
 	@AuthPassport
 	@RequestMapping(value="/org/{id}", method = {RequestMethod.POST})
-	public String setUserOrg(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
+	public String org(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
 		if(result.hasErrors())
-            return setUserOrg(request, model, id);
+            return org(request, model, id);
 
 		userService.updateBind(id, null, userAuthorizeModel.getOrgId());       
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
@@ -225,7 +293,7 @@ public class UserController extends BaseController {
     	return "redirect:"+returnUrl; 	
 	}
 	
-	@AuthPassport
+	/*@AuthPassport
 	@RequestMapping(value="/authorize/{id}", method = {RequestMethod.GET})
     public String authorize(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
 		if(!model.containsAttribute("contentModel")){
@@ -233,8 +301,8 @@ public class UserController extends BaseController {
 			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
 			User user = userService.getById(id);
 			UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
-			List<Role> roleList = roleService.selectUserRole(id);
-			UserBindModel.setRoleList(roleList);
+			List<Role> roles = roleService.selectUserRole(id);
+			UserBindModel.setRoles(roles);
             model.addAttribute("contentModel", UserBindModel);
         }	
 
@@ -261,12 +329,12 @@ public class UserController extends BaseController {
 		if(result.hasErrors())
             return authorize(request, model, id);
 
-		userService.updateBind(id, userAuthorizeModel.getRoleList(), userAuthorizeModel.getOrgId());       
+		userService.updateBind(id, userAuthorizeModel.getRoles(), userAuthorizeModel.getOrgId());       
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         if(returnUrl==null)
         	returnUrl="user/list";
     	return "redirect:"+returnUrl; 	
-	}
+	}*/
 	
 	@AuthPassport
 	@RequestMapping(value="/enable/{id}", method = {RequestMethod.GET})
