@@ -88,20 +88,20 @@
 					  <form:form modelAttribute="searchModel" class="form-horizontal" method="GET">
 						 <div class="form-body">
 							<div class="row">
-							   <div class="col-md-6">
+							<div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">姓名</label>
+									 <label class="control-label col-md-3">登陆名</label>
 									 <div class="col-md-9">
-										<form:input path="name" class="form-control placeholder-no-fix" autocomplete="off" placeholder="姓名"/>
+										<form:input path="loginName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="登陆名"/>
 									 </div>
 								  </div>
 							   </div>
 							   <!--/span-->
 							   <div class="col-md-6">
 								  <div class="form-group">
-									 <label class="control-label col-md-3">登陆名</label>
+									 <label class="control-label col-md-3">姓名</label>
 									 <div class="col-md-9">
-										<form:input path="loginName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="登陆名"/>
+										<form:input path="realName" class="form-control placeholder-no-fix" autocomplete="off" placeholder="姓名"/>
 									 </div>
 								  </div>
 							   </div>
@@ -149,10 +149,10 @@
 									        <input type="checkbox" class="checkboxes" name="Id" value="${ item.id }" />
 									    </td>
 									    <td>${ item.loginName }</td>
-							            <td>${ item.name }</td>
+							            <td>${ item.realName }</td>
 							            <td>${ item.email }</td>
 							            <td>${ item.enable }</td>
-							            <td><fmt:formatDate value="${ item.registerTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+							            <td><fmt:formatDate value="${ item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>

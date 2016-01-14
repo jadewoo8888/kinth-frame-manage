@@ -79,18 +79,18 @@
                      <form:form modelAttribute="contentModel" class="form-horizontal" method="POST">
                         <div class="form-body">
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">姓名</label>
+                              <label  class="col-md-2 control-label">登陆名</label>
                               <div class="col-md-10">
                             	 <p class="form-control-static">
-                                 	${contentModel.name}
+                                 	${contentModel.loginName}
                                  </p>
                               </div>
                            </div>
                             <div class="form-group">
-                              <label  class="col-md-2 control-label">用户名</label>
+                              <label  class="col-md-2 control-label">真实姓名</label>
                               <div class="col-md-10">
                             	 <p class="form-control-static">
-                                 	${contentModel.username}
+                                 	${contentModel.realName}
                                  </p>
                               </div>
                            </div>

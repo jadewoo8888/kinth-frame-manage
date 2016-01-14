@@ -89,8 +89,8 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">姓名</label>
                               <div class="col-md-10">
-                                 <form:input path="name" class="form-control" placeholder="姓名"/><br/>
-                                 <form:errors path="name" class="field-has-error"></form:errors>
+                                 <form:input path="realName" class="form-control" placeholder="姓名"/><br/>
+                                 <form:errors path="realName" class="field-has-error"></form:errors>
                               </div>
                            </div>
                            <div class="form-group">
