@@ -127,6 +127,7 @@ public class UserService {
 	
 	public void deleteById(String id) throws EntityOperateException{
 		userMapper.deleteByPrimaryKey(id);
+		userRoleMapper.deleteUserRoles(id);
 	}
 	
 	public void save(User user) throws EntityOperateException, ValidatException, NoSuchAlgorithmException {

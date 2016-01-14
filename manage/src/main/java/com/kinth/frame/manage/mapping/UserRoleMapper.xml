@@ -37,4 +37,10 @@
     delete from sys_user_role
     where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
+  
+   <select id="selRoleUserCount" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		select count(*) from sys_user_role
+		where role_id = #{roleId,jdbcType=VARCHAR}
+	</select>
 </mapper>

@@ -15,7 +15,9 @@ import com.kinth.frame.common.web.helper.PageListUtil;
 import com.kinth.frame.common.web.helper.TreeModel;
 import com.kinth.frame.manage.domain.Org;
 import com.kinth.frame.manage.domain.Role;
+import com.kinth.frame.manage.mapper.RoleAuthorityMapper;
 import com.kinth.frame.manage.mapper.RoleMapper;
+import com.kinth.frame.manage.mapper.UserRoleMapper;
 import com.kinth.frame.manage.service.model.RoleSearch;
 
 
@@ -23,6 +25,8 @@ import com.kinth.frame.manage.service.model.RoleSearch;
 public class RoleService {
 
 	@Resource private RoleMapper roleMapper;
+	@Resource private RoleAuthorityMapper roleAuthorityMapper;
+	@Resource private UserRoleMapper userRoleMapper;
 	
 	public Map<String, String> getAllRoleMap() {
 		Map<String, String> ret = new HashMap<String, String>();
@@ -63,12 +67,21 @@ public class RoleService {
 		roleMapper.updateByPrimaryKey(role);
 	}
 	
+	public void deleteById(String id) throws EntityOperateException {
+		roleMapper.deleteByPrimaryKey(id);
+		roleAuthorityMapper.deleteRoleAuthorities(id);
+	}
+	
 	public List<Role> selectUserRole(String userId) {
 		return roleMapper.selectUserRole(userId);
 	}
 	
 	public List<Role> getAllRole() {
 		return roleMapper.selectAll();
+	}
+	
+	public int selRoleUserCount(String roleId) {
+		return  userRoleMapper.selRoleUserCount(roleId);
 	}
 	
 	public List<TreeModel> ToTreeModels(List<Role> allRole,String selectedId, List<String> checkedIdList,List<String> expandedIdList) {

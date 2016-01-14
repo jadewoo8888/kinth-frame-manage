@@ -360,7 +360,7 @@ public class UserController extends BaseController {
 	
 	@AuthPassport
 	@RequestMapping(value="/delete/{id}", method = {RequestMethod.GET})
-	public String delete(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
+	public String delete(HttpServletRequest request, Model model, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
 
 		userService.deleteById(id);
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);

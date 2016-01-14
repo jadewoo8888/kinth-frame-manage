@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.kinth.frame.mange.web.controller.auth.AuthPassport;
 import com.kinth.frame.mange.web.model.RoleBindModel;
 import com.kinth.frame.mange.web.model.RoleEditModel;
 import com.kinth.frame.mange.web.model.RoleSearchModel;
+import com.kinth.frame.mange.web.model.UserAuthorizeModel;
 import com.kinth.frame.mange.web.model.extension.RoleBindModelExtension;
 import com.kinth.frame.mange.web.model.extension.RoleModelExtension;
 
@@ -153,4 +155,22 @@ public class RoleController extends BaseController {
         	returnUrl="role/list";
     	return "redirect:"+returnUrl;      	
     }
+	
+	@AuthPassport
+	@RequestMapping(value="/delete/{id}", method = {RequestMethod.GET})
+	public String delete(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{
+
+		int count = roleService.selRoleUserCount(id);
+		if (count > 0) {
+			model.addAttribute("alertContent", "该角色已经与其他角色关联，不能删除！");
+	    	return "role/alert"; 
+		}
+		
+		roleService.deleteById(id);
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        if(returnUrl==null)
+        	returnUrl="role/list";
+    	return "role/list"; 	
+	}
+	
 }  
