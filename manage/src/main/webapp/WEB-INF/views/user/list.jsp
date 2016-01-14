@@ -198,8 +198,14 @@
                  { link: true, display: "修改密码", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/updatePassword/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                  	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true },
-                 { link: true, display: "账户绑定", css: "icon-user", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/authorize/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
+                 <%-- { link: true, display: "账户绑定", css: "icon-user", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/authorize/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                   	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}, --%>
+               	 { link: true, display: "设置机构", css: "icon-user", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/org/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}, 
+                 { splitter: true },
+                 { link: true, display: "设置角色", css: "icon-user", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/role/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                  	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"}, 
+                 { splitter: true },
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/user/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
              ]

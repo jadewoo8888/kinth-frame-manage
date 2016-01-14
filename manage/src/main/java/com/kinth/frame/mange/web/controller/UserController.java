@@ -109,10 +109,10 @@ public class UserController extends BaseController {
         userAuth.setRoles(roleList);
         model.addAttribute("userAuth", userAuth);
         
-        return "user/selRole";
+        return "user/roleLogin";
 	}
 	
-	@RequestMapping(value="/selRoleLogin/{roleId}/{userId}/{loginName}/{realName}/", method = {RequestMethod.GET})
+	@RequestMapping(value="/role/login/{roleId}/{userId}/{loginName}/{realName}/", method = {RequestMethod.GET})
 	public String selRoleLogin(HttpServletRequest request, Model model, @PathVariable String roleId,@PathVariable String userId,@PathVariable String loginName,@PathVariable String realName) throws ValidatException, EntityOperateException, NoSuchAlgorithmException{
 			UserAuth userAuth=new UserAuth(userId, loginName, realName);
 	    	Role role = roleService.getById(roleId);
@@ -181,6 +181,49 @@ public class UserController extends BaseController {
 
         return "user/list";
     }
+	
+	@AuthPassport
+	@RequestMapping(value="/org/{id}", method = {RequestMethod.GET})
+    public String setUserOrg(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
+		if(!model.containsAttribute("contentModel")){
+			
+			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
+			User user = userService.getById(id);
+			UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
+			/*List<Role> roleList = roleService.selectUserRole(id);
+			UserBindModel.setRoleList(roleList);*/
+            model.addAttribute("contentModel", UserBindModel);
+        }	
+
+		List<TreeModel> treeModels;
+		UserAuthorizeModel authorizeModel=(UserAuthorizeModel)model.asMap().get("contentModel");
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
+		if(authorizeModel.getOrgId()!=null && !authorizeModel.getOrgId().equals("")){
+			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), authorizeModel.getOrgId(), null, StringHelper.toStringList( expanded, ","));
+			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,false,false,children)));
+		}
+		else{
+			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), null, null, StringHelper.toStringList( expanded, ","));
+			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,true,false,children)));
+		}
+		model.addAttribute(treeDataSourceName, JSON.toJSONString(treeModels));
+		model.addAttribute(selectDataSourceName, roleService.getAllRoleMap());
+		
+        return "user/org";
+    }
+	
+	@AuthPassport
+	@RequestMapping(value="/org/{id}", method = {RequestMethod.POST})
+	public String setUserOrg(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
+		if(result.hasErrors())
+            return setUserOrg(request, model, id);
+
+		userService.updateBind(id, null, userAuthorizeModel.getOrgId());       
+        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+        if(returnUrl==null)
+        	returnUrl="user/list";
+    	return "redirect:"+returnUrl; 	
+	}
 	
 	@AuthPassport
 	@RequestMapping(value="/authorize/{id}", method = {RequestMethod.GET})

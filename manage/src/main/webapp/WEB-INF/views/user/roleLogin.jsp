@@ -44,12 +44,12 @@
 				<p>
 					<c:choose>
 						<c:when test="${status.index % 2 == 0}">
-						<a href="<c:url value='/user/selRoleLogin/${ item.id }/${userAuth.id}/${userAuth.loginName }/${userAuth.realName }/'/>" class="btn btn-primary btn-lg btn-block" style="font-size: 50px" role="button">
+						<a href="<c:url value='/user/role/login/${ item.id }/${userAuth.id}/${userAuth.loginName }/${userAuth.realName }/'/>" class="btn btn-primary btn-lg btn-block" style="font-size: 50px" role="button">
 							<span class="glyphicon glyphicon-user"></span> ${ item.name }
 						</a>
 						</c:when>
 						<c:otherwise>
-						<a href="<c:url value='/user/selRoleLogin/${ item.id }/${userAuth.id}/${userAuth.loginName }/${userAuth.realName }/'/>" class="btn btn-default btn-lg btn-block" style="font-size: 50px" role="button">
+						<a href="<c:url value='/user/role/login/${ item.id }/${userAuth.id}/${userAuth.loginName }/${userAuth.realName }/'/>" class="btn btn-default btn-lg btn-block" style="font-size: 50px" role="button">
 							<span class="glyphicon glyphicon-user"></span> ${ item.name }
 						</a>
 						</c:otherwise>

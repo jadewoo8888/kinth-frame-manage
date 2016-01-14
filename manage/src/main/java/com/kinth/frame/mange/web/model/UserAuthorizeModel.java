@@ -6,6 +6,7 @@ import com.kinth.frame.manage.domain.Role;
 
 public class UserAuthorizeModel {
 
+	private String id;
 	private String loginName;
 	private String realName;
 	private List<Role> roleList;
@@ -34,6 +35,12 @@ public class UserAuthorizeModel {
 	}
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

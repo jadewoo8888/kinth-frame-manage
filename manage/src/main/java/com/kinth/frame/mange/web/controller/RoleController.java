@@ -30,7 +30,6 @@ import com.kinth.frame.manage.service.AuthorityService;
 import com.kinth.frame.manage.service.RoleAuthorityService;
 import com.kinth.frame.manage.service.RoleService;
 import com.kinth.frame.mange.web.controller.auth.AuthPassport;
-import com.kinth.frame.mange.web.model.UserAuthorizeModel;
 import com.kinth.frame.mange.web.model.RoleBindModel;
 import com.kinth.frame.mange.web.model.RoleEditModel;
 import com.kinth.frame.mange.web.model.RoleSearchModel;

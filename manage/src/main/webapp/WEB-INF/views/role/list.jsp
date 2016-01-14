@@ -93,7 +93,7 @@
 		                           <tr>
 		                              <th class="table-checkbox"><input type="checkbox" class="group-checkable"/></th>
 		                              <th>名称</th>
-		                              <th >是否可用</th>
+		                              <!-- <th >是否可用</th> -->
 		                           </tr>
 		                        </thead>
 		                        <tbody>
@@ -103,7 +103,7 @@
 									        <input type="checkbox" class="checkboxes" name="Id" value="${ item.id }" />
 									    </td>
 							            <td>${ item.name }</td>
-							            <td>${ item.enable }</td>
+							            <%-- <td>${ item.enable }</td> --%>
 							        </tr>
 							        </c:forEach>
 		                        </tbody>
@@ -140,12 +140,12 @@
                  { link: true, display: "编辑", css: "icon-edit", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/edit/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true }, 
-                 { link: true, display: "启用", css: "icon-ok", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/enable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>",
+                <%--  { link: true, display: "启用", css: "icon-ok", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/enable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>",
                 	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { splitter: true }, 
                  { link: true, display: "禁用", css: "icon-remove", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/disable/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                  	 selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { splitter: true }, 
+                 { splitter: true },  --%>
                  { link: true, display: "绑定权限", css: "icon-tasks", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/bind/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
                  { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
