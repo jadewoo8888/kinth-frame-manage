@@ -142,7 +142,7 @@ var AccountValidate = function () {
 	                },
 	                password: {
 	                    required: true,
-			    minlength:8
+			    minlength:6
 	                },
 	                confirmPassword: {
 	                    equalTo: "#password"

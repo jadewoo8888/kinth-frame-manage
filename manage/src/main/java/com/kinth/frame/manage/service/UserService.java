@@ -17,10 +17,8 @@ import com.kinth.frame.common.helper.StringHelper;
 import com.kinth.frame.common.web.helper.PageList;
 import com.kinth.frame.common.web.helper.PageListUtil;
 import com.kinth.frame.manage.config.SysConfig;
-import com.kinth.frame.manage.domain.Role;
 import com.kinth.frame.manage.domain.User;
 import com.kinth.frame.manage.domain.UserRoleKey;
-import com.kinth.frame.manage.mapper.RoleMapper;
 import com.kinth.frame.manage.mapper.UserMapper;
 import com.kinth.frame.manage.mapper.UserRoleMapper;
 
@@ -30,16 +28,16 @@ public class UserService {
 	@Resource UserMapper userMapper;
 	@Resource UserRoleMapper userRoleMapper;
 	
-	public PageList<User> listPage(String name, String username, int pageNo,
+	public PageList<User> listPage(String loginName, String realName, int pageNo,
 			int pageSize) {
 
 		Map<String,Object> param = new HashMap<String,Object>();
 		
-		if (name != null && !name.isEmpty()) {
-			param.put("name", name);
+		if (loginName != null && !loginName.isEmpty()) {
+			param.put("loginName", loginName);
 		}
-		if (username != null && !username.isEmpty()) {
-			param.put("username", username);
+		if (realName != null && !realName.isEmpty()) {
+			param.put("realName", realName);
 		}
 
 		param.put("startIndex", (pageNo - 1) * pageSize);
@@ -115,7 +113,7 @@ public class UserService {
 			dbUser.setRealName(user.getRealName());
 		}
 		if (user.getPassword() != null && !user.getPassword().equals("")) {
-			dbUser.setPassword(StringHelper.md5(user.getRealName()+user.getPassword()));
+			dbUser.setPassword(StringHelper.md5(dbUser.getLoginName()+user.getPassword()));
 		}
 		/*if (account.getUsername() != null && !account.getUsername().equals("")) {
 			dbAccount.setUsername(account.getUsername());
