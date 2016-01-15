@@ -9,6 +9,7 @@ public class OrgModelExtension {
 		Org ret =new Org();
 		ret.setId(editModel.getId());
 		ret.setName(editModel.getName());
+		ret.setSort(editModel.getSort());
 		//ret.setPosition(editModel.getPosition());
 		//ret.setTheValue(editModel.getTheValue());
 		
@@ -23,6 +24,7 @@ public class OrgModelExtension {
 		OrgEditModel ret=new OrgEditModel();
 		ret.setId(model.getId());
 		ret.setName(model.getName());
+		ret.setSort(model.getSort());
 		//ret.setPosition(model.getPosition());
 		//ret.setTheValue(model.getTheValue());
 		
