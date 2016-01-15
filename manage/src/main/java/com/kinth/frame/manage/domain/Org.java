@@ -1,11 +1,14 @@
 package com.kinth.frame.manage.domain;
 
 public class Org {
+	
     private String id;
 
     private String name;
 
     private String parentId;
+    
+    private Integer sort;
 
     public String getId() {
         return id;
@@ -30,4 +33,15 @@ public class Org {
     public void setParentId(String parentId) {
         this.parentId = parentId == null ? null : parentId.trim();
     }
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	
+    
 }

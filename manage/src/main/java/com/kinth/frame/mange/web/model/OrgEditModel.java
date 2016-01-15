@@ -1,13 +1,11 @@
 package com.kinth.frame.mange.web.model;
 
-import javax.validation.constraints.NotNull;
 
 public class OrgEditModel {
 
 	private String id;
 	private String name;	
-	private int position;
-	private String theValue;
+	private int sort;
 	private String parentId;
 
 	public void setId(String id){
@@ -16,12 +14,6 @@ public class OrgEditModel {
 	public void setName(String name){
 		this.name=name;
 	}	
-	public void setPosition(int position){
-		this.position=position;
-	}
-	public void setTheValue(String theValue){
-		this.theValue=theValue;
-	}
 	public void setParentId(String parentId){
 		this.parentId=parentId;
 	}
@@ -32,14 +24,14 @@ public class OrgEditModel {
 	public String getName(){
 		return this.name;
 	}
-	public int getPosition(){
-		return this.position;
-	}
-	public String getTheValue(){
-		return this.theValue;
-	}
 	public String getParentId(){
 		return this.parentId;
+	}
+	public int getSort() {
+		return sort;
+	}
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 	
 }

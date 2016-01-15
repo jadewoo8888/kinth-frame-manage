@@ -27,10 +27,10 @@
   <insert id="insert" parameterType="com.kinth.frame.manage.domain.Authority" >
     insert into sys_authority (id, name, url, 
       match_url, item_icon, parent_id, 
-      auth_object_type)
+      auth_object_type,sort)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{matchUrl,jdbcType=VARCHAR}, #{itemIcon,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
-      #{authObjectType,jdbcType=INTEGER})
+      #{authObjectType,jdbcType=INTEGER},#{sort,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.kinth.frame.manage.domain.Authority" >
     insert into sys_authority
