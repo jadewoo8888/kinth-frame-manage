@@ -38,6 +38,10 @@
 		delete from sys_role_authority
 		where role_id = #{roleId,jdbcType=VARCHAR}
 	</delete>
+	<delete id="deleteAuthoritieRoles" parameterType="java.lang.String">
+		delete from sys_role_authority
+		where auth_id = #{authId,jdbcType=VARCHAR}
+	</delete>
   
   <select id="batchInsertRoleAuthorities" parameterType="java.util.List">
 		insert into sys_role_authority (role_id, auth_id) values

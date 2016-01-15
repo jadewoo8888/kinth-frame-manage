@@ -16,6 +16,7 @@ import com.kinth.frame.common.web.helper.PageListUtil;
 import com.kinth.frame.common.web.helper.TreeModel;
 import com.kinth.frame.manage.domain.Authority;
 import com.kinth.frame.manage.mapper.AuthorityMapper;
+import com.kinth.frame.manage.mapper.RoleAuthorityMapper;
 import com.kinth.frame.manage.service.model.AuthoritySearch;
 
 
@@ -23,6 +24,7 @@ import com.kinth.frame.manage.service.model.AuthoritySearch;
 public class AuthorityService {
 
 	@Resource private AuthorityMapper authorityMapper;
+	@Resource private RoleAuthorityMapper roleAuthorityMapper;
 	
 	public Authority getById(String id) {
 		Authority authority = authorityMapper.selectByPrimaryKey(id);
@@ -70,6 +72,7 @@ public class AuthorityService {
 	}
 	public void delete(String id) throws EntityOperateException, ValidatException {
 	    authorityMapper.deleteByPrimaryKey(id);
+	    roleAuthorityMapper.deleteAuthoritieRoles(id);
 	}
 	
 	public List<Authority> getAuthorityTree(Authority parent) {

@@ -13,5 +13,7 @@ public interface RoleAuthorityMapper {
     
     int deleteRoleAuthorities(String roleId);
     
+    int deleteAuthoritieRoles(String authId);
+    
     void batchInsertRoleAuthorities(List<RoleAuthorityKey> roleAuthorities);
 }
