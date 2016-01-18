@@ -3,6 +3,7 @@
 <%
 String bashPath = request.getContextPath();
 %>
+<script type="text/javascript">var bashPath = '<%=bashPath%>';</script>
 <!-- BEGIN HEADER -->   
 <div class="header navbar navbar-inverse navbar-fixed-top">
    <!-- BEGIN TOP NAVIGATION BAR -->

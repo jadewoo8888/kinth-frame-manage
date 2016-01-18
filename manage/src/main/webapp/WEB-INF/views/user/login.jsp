@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<img src="assets/img/logo.png" alt="" /> 
+		<!-- <img src="assets/img/logo.png" alt="" />  -->
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->

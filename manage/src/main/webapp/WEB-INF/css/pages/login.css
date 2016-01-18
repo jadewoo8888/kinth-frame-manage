@@ -4,7 +4,7 @@ Login page
 
 /* logo page */
 .login {
-  background-color: #515255 !important;
+  background-color: #0b679e !important;
 }
 
 .login .logo {
@@ -142,7 +142,7 @@ Login page
   text-align: center;
   margin: 0 auto; 
   padding: 10px;
-  color: #999;
+  color: #ffffff;
   font-size: 13px;
 }
 

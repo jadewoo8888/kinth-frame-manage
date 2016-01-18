@@ -2,7 +2,8 @@
 	<!--[if lt IE 9]>
 	<script src="<c:url value='/plugins/respond.min.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/plugins/excanvas.min.js'/>" type="text/javascript"></script> 
-	<![endif]-->   
+	<![endif]--> 
+  
 	<script src="<c:url value='/plugins/jquery-1.10.2.min.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/plugins/jquery-migrate-1.2.1.min.js'/>" type="text/javascript"></script>
 	<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
