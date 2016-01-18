@@ -35,7 +35,7 @@
 			<div class="dataTables_paginate paging_bootstrap">
 		   		<ul class="pagination">
 
-		<%String queryString=request.getQueryString();System.out.println(queryString);
+		<%String queryString=request.getQueryString();
 		urlAddress = UrlSupport.resolveUrl(urlAddress, null, pageContext);
 		if (pageModel.getHasPre()) {
             String preUrl = pageModel.resolveUrl(urlAddress, queryString, pageModel.getPageIndex() - 1, null);%>
