@@ -2,7 +2,7 @@
 <!-- BEGIN FOOTER -->
 <div class="footer">
    <div class="footer-inner">
-      2015 &copy; Conquer by kinth.
+      2016 &copy; kinth by wuzhy.
    </div>
    <div class="footer-tools">
       <span class="go-top">
