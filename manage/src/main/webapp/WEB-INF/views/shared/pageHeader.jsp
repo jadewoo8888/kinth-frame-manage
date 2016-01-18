@@ -39,7 +39,7 @@ String bashPath = request.getContextPath();
               </li>
               <li class="divider"></li>
               </li>
-              <li><a href="<%=UrlHelper.resolveUrl("/account/logOut", pageContext)%>"><i class="icon-off"></i>注销登录</a>
+              <li><a href="<%=UrlHelper.resolveUrl("/user/logOut", pageContext)%>"><i class="icon-off"></i>注销登录</a>
               </li>
            </ul>
         </li>

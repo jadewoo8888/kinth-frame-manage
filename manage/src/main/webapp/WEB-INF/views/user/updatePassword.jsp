@@ -47,10 +47,7 @@
          <!-- BEGIN PAGE HEADER-->   
          <div class="row">
             <div class="col-md-12">
-               <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-               <h3 class="page-title">
-                  Form Controls <small>form controls and more</small>
-               </h3>
+               <%@ include file="../shared/sysName.jsp"%>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>

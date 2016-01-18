@@ -187,29 +187,6 @@ public class UserController extends BaseController {
 	@AuthPassport
 	@RequestMapping(value="/role/{id}", method = {RequestMethod.GET})
     public String role(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
-		/*if(!model.containsAttribute("contentModel")){
-			
-			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
-			User user = userService.getById(id);
-			UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
-			List<Role> roleList = roleService.selectUserRole(id);
-			UserBindModel.setRoleList(roleList);
-            model.addAttribute("contentModel", UserBindModel);
-        }	
-
-		List<TreeModel> treeModels;
-		UserAuthorizeModel authorizeModel=(UserAuthorizeModel)model.asMap().get("contentModel");
-		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-		if(authorizeModel.getOrgId()!=null && !authorizeModel.getOrgId().equals("")){
-			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), authorizeModel.getOrgId(), null, StringHelper.toStringList( expanded, ","));
-			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,false,false,children)));
-		}
-		else{
-			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), null, null, StringHelper.toStringList( expanded, ","));
-			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,true,false,children)));
-		}
-		model.addAttribute(treeDataSourceName, JSON.toJSONString(treeModels));
-		model.addAttribute(selectDataSourceName, roleService.getAllRoleMap());*/
 		
 		
 		User user = userService.getById(id);
@@ -292,49 +269,6 @@ public class UserController extends BaseController {
         	returnUrl="user/list";
     	return "redirect:"+returnUrl; 	
 	}
-	
-	/*@AuthPassport
-	@RequestMapping(value="/authorize/{id}", method = {RequestMethod.GET})
-    public String authorize(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{	
-		if(!model.containsAttribute("contentModel")){
-			
-			//UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(UserService.getById(id));
-			User user = userService.getById(id);
-			UserAuthorizeModel UserBindModel = UserAuthorizeModelExtension.toUserBindModel(user);
-			List<Role> roles = roleService.selectUserRole(id);
-			UserBindModel.setRoles(roles);
-            model.addAttribute("contentModel", UserBindModel);
-        }	
-
-		List<TreeModel> treeModels;
-		UserAuthorizeModel authorizeModel=(UserAuthorizeModel)model.asMap().get("contentModel");
-		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-		if(authorizeModel.getOrgId()!=null && !authorizeModel.getOrgId().equals("")){
-			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), authorizeModel.getOrgId(), null, StringHelper.toStringList( expanded, ","));
-			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,false,false,children)));
-		}
-		else{
-			List<TreeModel> children = orgService.ToTreeModels(orgService.getOrgRoots(), null, null, StringHelper.toStringList( expanded, ","));
-			treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0","0","根节点",false,true,false,children)));
-		}
-		model.addAttribute(treeDataSourceName, JSON.toJSONString(treeModels));
-		model.addAttribute(selectDataSourceName, roleService.getAllRoleMap());
-		
-        return "user/authorize";
-    }
-
-	@AuthPassport
-	@RequestMapping(value="/authorize/{id}", method = {RequestMethod.POST})
-	public String authorize(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") UserAuthorizeModel userAuthorizeModel, @PathVariable(value="id") String id, BindingResult result) throws ValidatException, EntityOperateException{
-		if(result.hasErrors())
-            return authorize(request, model, id);
-
-		userService.updateBind(id, userAuthorizeModel.getRoles(), userAuthorizeModel.getOrgId());       
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="user/list";
-    	return "redirect:"+returnUrl; 	
-	}*/
 	
 	@AuthPassport
 	@RequestMapping(value="/enable/{id}", method = {RequestMethod.GET})
