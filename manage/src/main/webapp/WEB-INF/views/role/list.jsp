@@ -131,6 +131,53 @@
    	  $(function() {   
          App.init();
          
+         var delFn = function() {
+             var selectedId = [];
+             var index = 0;
+             var roles = new Array();
+             var checkboxes = $('#data-table').find(".checkboxes");
+             $(checkboxes).each(function() {
+                 if ($(this).prop("checked")) {
+                	 var roleId = $(this).val();
+                	 var idTd = $(this).parents(".check_cell");
+                	 var roleName = idTd.next()[0].innerText;
+                	 var role = {id:roleId,name:roleName};
+                	 roles.push(role);
+                	 selectedId[index++] = $(this).val();
+                	 
+                 }
+                     
+             });
+             
+             var length = roles.length;
+             if (length == 0) {
+                 alert("请先选择数据！");
+                 return;
+             }
+             //selectedId = $.unique(selectedId);
+             var idsStr = selectedId.join(", ");
+             
+             $.post("<%=bashPath%>/role/delete", { ids: idsStr},
+				   function(data){
+		            	 if (data != "") {
+		            		 $.each(roles,function(i,item){
+		                		 if(item.id==data) {
+		                			 alert("["+item.name+"]已被用户绑定不能删除，请重新选择！");
+		                			 return;
+		                		 }
+		                	 });
+		            	 } else {
+		            		 alert("删除成功！");
+		            		 //location.href = "<%=bashPath%>/role/list";
+		            		 location.reload();
+		            	 }
+				    
+				   });
+             
+             
+             
+         };
+         
          $("#data-table").tableManaged();
          
          $(".table-toolbar").toolbarLite({
@@ -148,8 +195,9 @@
                  { splitter: true },  --%>
                  { link: true, display: "绑定权限", css: "icon-tasks", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/bind/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
                    	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", singleSelect: "该操作只支持单选！"},
-                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
-                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"}
+                 <%-- { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "<%=UrlHelper.resolveWithReturnUrl("/role/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), pageContext)%>", 
+                   	selector: "#data-table .checkboxes", mustSelect: "请先选择数据！", confirm: "确认删除所选数据吗？"} --%>
+                 { link: true, display: "删除", css: "icon-trash", showIcon: true, url: "javascript:;",click: delFn}
              ]
          });
       });

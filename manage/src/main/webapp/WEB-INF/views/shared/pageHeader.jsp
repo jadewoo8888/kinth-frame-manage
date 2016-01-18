@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.kinth.frame.common.web.helper.UrlHelper" %>
+<%
+String bashPath = request.getContextPath();
+%>
 <!-- BEGIN HEADER -->   
 <div class="header navbar navbar-inverse navbar-fixed-top">
    <!-- BEGIN TOP NAVIGATION BAR -->

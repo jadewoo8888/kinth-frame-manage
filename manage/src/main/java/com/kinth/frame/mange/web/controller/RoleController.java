@@ -2,7 +2,9 @@ package com.kinth.frame.mange.web.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.kinth.frame.common.exception.EntityOperateException;
@@ -157,20 +161,22 @@ public class RoleController extends BaseController {
     }
 	
 	@AuthPassport
-	@RequestMapping(value="/delete/{id}", method = {RequestMethod.GET})
-	public String delete(HttpServletRequest request, Model model, @PathVariable(value="id") String id) throws ValidatException, EntityOperateException{
-
-		int count = roleService.selRoleUserCount(id);
-		if (count > 0) {
-			model.addAttribute("alertContent", "该角色已经与其他角色关联，不能删除！");
-	    	return "role/alert"; 
+	@RequestMapping(value="/delete", method = {RequestMethod.POST})
+	@ResponseBody
+	public String delete(String ids) throws ValidatException, EntityOperateException {
+		String[] idArr = ids.split(",");
+		for (String id : idArr) {
+			int count = roleService.selRoleUserCount(id.trim());
+			if (count > 0) {
+				return id.trim();
+			} 
 		}
 		
-		roleService.deleteById(id);
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="role/list";
-    	return "role/list"; 	
+		for (String id : idArr) {
+			roleService.deleteById(id.trim());
+		}
+		return "";
 	}
+	
 	
 }  

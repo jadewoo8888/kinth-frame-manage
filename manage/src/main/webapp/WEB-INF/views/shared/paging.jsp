@@ -5,11 +5,8 @@
 
 <%
 	String urlAddress=request.getParameter("urlAddress");
-	System.out.println(urlAddress);
 	String pageModelName= request.getParameter("pageModelName");
-	System.out.println(pageModelName);
 	Integer pageCount=(request.getParameter("pageCount")!=null&&!request.getParameter("pageCount").isEmpty())?Integer.valueOf(request.getParameter("pageCount")):10;
-	System.out.println(pageCount);
 %>
 
 <div class="row">

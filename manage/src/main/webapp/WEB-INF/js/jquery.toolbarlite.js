@@ -4,9 +4,9 @@
         (
             {
                 items: null,
-                /*Ê¹ÓÃ·¶Àý
+                /*Ê¹ï¿½Ã·ï¿½ï¿½ï¿½
                 [
-                { link: true, display: "ÔÊÐí", css: "enabled", showIcon: true, url: "<%= Url.Action("Allow", new {condition="{0}" }).UrlDecode() %>", 
+                { link: true, display: "ï¿½ï¿½ï¿½ï¿½", css: "enabled", showIcon: true, url: "<%= Url.Action("Allow", new {condition="{0}" }).UrlDecode() %>", 
                 selector: "#account_grid .check_row", mustSelect: "Please select some one!", singleSelect: "Single select only!"  },
                 { splitter: true },
                 { link: true, display: "Delete", css: "delete", showIcon: true, url: "#" },
